@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia - Declarative Config & Runtime Manager</title>
+    <link rel="icon" type="image/svg+xml" href="logo-chia.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Overpass:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/v86/build/libv86.full.js"></script>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <img src="banner-chia.svg" alt="Chia" class="nav-logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="docs.html">Docs</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="https://github.com/chia-project/chia" class="github-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-banner">
+                    <img src="promo-chia.svg" alt="Chia - use Nix or other options" class="banner-svg">
+                </div>
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Declarative Configuration<br>
+                        <span class="gradient-text">Made Simple</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Chia is a Nix-like declarative configuration and runtime manager built exclusively for 
+                        Arch Linux, bringing reproducible system management to the bleeding edge.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="docs.html#get-started" class="btn-primary">Get Started</a>
+                        <a href="#examples" class="btn-outline">View Examples</a>
+                    </div>
+                </div>
+                <div class="hero-code">
+                    <div class="code-window draggable-window">
+                        <div class="code-header draggable-handle">
+                            <div class="code-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <span class="code-title">config.chia</span>
+                            <button class="run-btn" title="Run">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 2L13 8L3 14V2Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <pre class="code-content"><code>user-packages {
+  -- alacritty --
+  %auto
+  needs^
+
+  -- discord --
+  %auto
+  needs^
+  
+  -- git --
+  %auto
+  needs^
+  
+  -- vencord --
+  discord
+  share^
+  %auto
+  needs^
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Chia?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>App Isolation</h3>
+                        <p>Each app runs in its own isolated filesystem, with files symlinked only when the app launches.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Smart Symlinking</h3>
+                        <p>Automatic symlinking on app launch and cleanup on exit, keeping your system clean and organized.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Selective Sharing</h3>
+                        <p>Control which apps can access each other's files with the share^ directive for secure collaboration.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏗️</div>
+                        <h3>Arch Native</h3>
+                        <p>Built specifically for Arch Linux, leveraging pacman and the AUR for seamless package management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="syntax-explanation">
+            <div class="container">
+                <h2 class="section-title">Understanding .chia Syntax</h2>
+                <div class="syntax-grid">
+                    <div class="syntax-card">
+                        <h3>-- app-name --</h3>
+                        <p>Defines an isolated app environment. Each app must define exactly one package.</p>
+                        <div class="syntax-example">
+                            <code>-- terminal --<br>alacritty<br>%auto<br>share^</code>
+                        </div>
+                    </div>
+                    <div class="syntax-card">
+                        <h3>package^ / binary^</h3>
+                        <p>Override package or binary names. The ^ directive goes on its own line, then the value on the next line.</p>
+                        <div class="syntax-example">
+                            <code>visual-studio-code-bin<br>package^<br>code<br>binary^</code>
+                        </div>
+                    </div>
+                    <div class="syntax-card">
+                        <h3>%auto / %none</h3>
+                        <p>%auto includes pacman dependencies for the single package above. %none skips dependencies entirely.</p>
+                        <div class="syntax-example">
+                            <code>discord-ptb<br>%auto</code>
+                        </div>
+                    </div>
+                    <div class="syntax-card">
+                        <h3>share^ / needs^</h3>
+                        <p>share^ makes other defined apps available to this one. needs^ defines dependencies on other apps. Both appear alone.</p>
+                        <div class="syntax-example">
+                            <code>share^<br>needs^</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="file-structure">
+            <div class="container">
+                <h2 class="section-title">File Structure</h2>
+                <div class="structure-container">
+                    <div class="structure-example">
+                        <div class="file-tree">
+                            <pre><code>/chia
+├── entry-point.chia
+├── /packages
+│   ├── user-packages.chia
+│   └── special-packages.chia
+├── /configs
+│   ├── settings.json
+│   ├── nginx.conf
+│   └── gitconfig.ini
+└── /system
+    ├── system-packages.chia
+    └── network-setup.chia</code></pre>
+                        </div>
+                    </div>
+                    <div class="structure-info">
+                        <h3>Organized Configuration</h3>
+                        <p>Chia uses a structured approach to configuration management:</p>
+                        <ul>
+                            <li><strong>Entry Point:</strong> Main configuration file that ties everything together</li>
+                            <li><strong>Packages:</strong> Separate user and system package definitions</li>
+                            <li><strong>Configs:</strong> Application-specific configuration files</li>
+                            <li><strong>System:</strong> System-level settings and network configuration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="examples">
+            <div class="container">
+                <h2 class="section-title">Quick Examples</h2>
+                <div class="examples-tabs">
+                    <button class="tab-btn active" data-tab="basic">Basic Setup</button>
+                    <button class="tab-btn" data-tab="services">Services</button>
+                    <button class="tab-btn" data-tab="development">Development</button>
+                </div>
+                
+                <div class="tab-content active" id="basic">
+                    <div class="code-example">
+                        <pre><code># Basic isolated package setup
+user-packages {
+  -- alacritty --
+  alacritty
+  %auto
+  share^
+  
+  -- discord --
+  discord-ptb
+  %auto
+  share^
+  needs^
+
+  -- vencord --
+  discord
+  %auto
+  share^
+  needs^
+  
+  -- main browser --
+  firefox
+  %none 
+  share^
+  needs^
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="services">
+                    <div class="code-example">
+                        <pre><code# Development environment with shared tools
+user-packages {
+  -- git --
+  git
+  %auto
+  share^
+  
+  -- nodejs --
+  nodejs-lts-hydrogen
+  %auto
+  share^
+  needs^
+  
+  -- vscode --
+  visual-studio-code-bin
+  package^
+  code
+  binary^
+  %auto
+  share^
+  needs^
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="development">
+                    <div class="code-example">
+                        <pre><code# Complex dependency chain
+user-packages {
+  -- docker --
+  docker
+  %auto
+  share^
+  
+  -- kubectl --
+  kubectl
+  %auto
+  share^
+  needs^
+  
+  -- jetbrains --
+  jetbrains-toolbox
+  %auto
+  share^
+  needs^
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Chia</h4>
+                    <p>Declarative configuration made simple</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="#examples">Examples</a></li>
+                        <li><a href="#community">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://github.com/chia-project/chia">GitHub</a></li>
+                        <li><a href="https://discord.gg/chia">Discord</a></li>
+                        <li><a href="https://twitter.com/chia_config">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Chia Project. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
