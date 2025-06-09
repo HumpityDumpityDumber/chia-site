@@ -132,16 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
         yOffset = 0;
     });
     
-    // Hide on load if previously closed
-    const isClosed = document.cookie.split(';').some(c => c.trim().startsWith('heroClosed='));
-    if (isClosed && draggableWindow) draggableWindow.style.display = 'none';
-
-    // Expose reopen command
-    window.openWindow = function() {
-        document.cookie = 'heroClosed=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-        if (draggableWindow) draggableWindow.style.display = '';
-    };
-
     // Window controls
     if (draggableWindow) {
         const dots = draggableWindow.querySelectorAll('.code-dots span');
@@ -149,8 +139,77 @@ document.addEventListener('DOMContentLoaded', function() {
             const [closeBtn, minBtn, maxBtn] = dots;
 
             closeBtn.addEventListener('click', () => {
-                document.cookie = 'heroClosed=true; path=/';
-                draggableWindow.style.display = 'none';
+                // Create confirmation modal
+                const modal = document.createElement('div');
+                modal.className = 'close-confirmation-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>Close Code Window?</h3>
+                        <p>Are you sure you want to close the code window? It won't reappear for 1 minute.</p>
+                        <div class="modal-buttons">
+                            <button class="btn-confirm">Yes, Close</button>
+                            <button class="btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Add cursor interactions to modal buttons
+                if (window.innerWidth > 768 && !('ontouchstart' in window)) {
+                    const confirmBtn = modal.querySelector('.btn-confirm');
+                    const cancelBtn = modal.querySelector('.btn-cancel');
+                    
+                    confirmBtn.addEventListener('mouseenter', () => setCursor('button-magnetic', confirmBtn));
+                    confirmBtn.addEventListener('mouseleave', () => setCursor(''));
+                    cancelBtn.addEventListener('mouseenter', () => setCursor('button-magnetic', cancelBtn));
+                    cancelBtn.addEventListener('mouseleave', () => setCursor(''));
+                }
+                
+                // Handle confirmation
+                modal.querySelector('.btn-confirm').addEventListener('click', () => {
+                    draggableWindow.style.display = 'none';
+                    modal.remove();
+                    
+                    // Set timer for 1 minute before allowing reopen
+                    setTimeout(() => {
+                        // Create reopen button after 1 minute
+                        const reopenBtn = document.createElement('button');
+                        reopenBtn.className = 'reopen-window-btn';
+                        reopenBtn.innerHTML = `
+                            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4h16v16H4V4zm2 2v12h12V6H6z"/>
+                                <path d="M8 10h8v4H8v-4z"/>
+                            </svg>`;
+                        reopenBtn.title = 'Reopen code window';
+                        if (hero) {
+                            hero.append(reopenBtn);
+                        }
+                        
+                        reopenBtn.addEventListener('click', () => {
+                            draggableWindow.style.display = '';
+                            reopenBtn.remove();
+                        });
+                        
+                        // Add cursor interaction for reopen button
+                        if (window.innerWidth > 768 && !('ontouchstart' in window)) {
+                            reopenBtn.addEventListener('mouseenter', () => setCursor('button-magnetic', reopenBtn));
+                            reopenBtn.addEventListener('mouseleave', () => setCursor(''));
+                        }
+                    }, 60000); // 1 minute = 60000ms
+                });
+                
+                // Handle cancel
+                modal.querySelector('.btn-cancel').addEventListener('click', () => {
+                    modal.remove();
+                });
+                
+                // Close on backdrop click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
             });
 
             minBtn.addEventListener('click', () => {
@@ -158,10 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const restore = document.createElement('button');
                 restore.className = 'restore-btn';
                 restore.innerHTML = `
-                    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 2h12v12H2z" stroke="#e6e6e6" fill="none"/>
-                      <path d="M4 8l3-2v4l-3-2z" fill="#e6e6e6"/>
-                    </svg>`;
+                    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>restore_fill</title> <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="System" transform="translate(-240.000000, -240.000000)"> <g id="restore_fill" transform="translate(240.000000, 240.000000)"> <path d="M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z" id="MingCute" fill-rule="nonzero"> </path> <path d="M19,2.5 C20.325472,2.5 21.4100378,3.53153766 21.4946823,4.83562452 L21.5,5 L21.5,15 C21.5,16.325472 20.4684531,17.4100378 19.1643744,17.4946823 L19,17.5 L17.5,17.5 L17.5,19 C17.5,20.325472 16.4684531,21.4100378 15.1643744,21.4946823 L15,21.5 L5,21.5 C3.6745184,21.5 2.58996147,20.4684531 2.50531769,19.1643744 L2.5,19 L2.5,9 C2.5,7.6745184 3.53153766,6.58996147 4.83562452,6.50531769 L5,6.5 L6.5,6.5 L6.5,5 C6.5,3.6745184 7.53153766,2.58996147 8.83562452,2.50531769 L9,2.5 L19,2.5 Z M14.5,9.5 L5.5,9.5 L5.5,18.5 L14.5,18.5 L14.5,9.5 Z M18.5,5.5 L9.5,5.5 L9.5,6.5 L15,6.5 L15.1643744,6.50531769 C16.4141165,6.58643465 17.4135646,7.58587462 17.4946823,8.83562452 L17.5,9 L17.5,14.5 L18.5,14.5 L18.5,5.5 Z" id="形状" fill="#ffffff"> </path> </g> </g> </g> </g></svg>`;
+                restore.title = 'Restore window';
                 if (hero) {
                     hero.append(restore);
                 }
@@ -169,6 +226,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     draggableWindow.style.display = '';
                     restore.remove();
                 });
+                
+                // Add cursor interaction for restore button
+                if (window.innerWidth > 768 && !('ontouchstart' in window)) {
+                    restore.addEventListener('mouseenter', () => setCursor('button-magnetic', restore));
+                    restore.addEventListener('mouseleave', () => setCursor(''));
+                }
             });
 
             maxBtn.addEventListener('click', () => {
@@ -260,10 +323,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 cursor.style.left = (rect.left + rect.width / 2) + 'px';
                 cursor.style.top = (rect.top + rect.height / 2) + 'px';
                 
+            } else if (state === 'window-control' && element) {
+                const rect = element.getBoundingClientRect();
+                isSnapped = true;
+                currentElement = element;
+                
+                cursor.className = 'custom-cursor window-control';
+                
+                cursor.style.left = (rect.left + rect.width / 2) + 'px';
+                cursor.style.top = (rect.top + rect.height / 2) + 'px';
+                
             } else {
                 // Smooth exit transition
                 if (cursor.classList.contains('nav-magnetic') || 
-                    cursor.classList.contains('button-magnetic')) {
+                    cursor.classList.contains('button-magnetic') ||
+                    cursor.classList.contains('window-control')) {
                     cursor.style.transition = 'all 0.15s cubic-bezier(0.23, 1, 0.32, 1)';
                     
                     setTimeout(() => {
@@ -294,6 +368,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.nav-logo, .github-link').forEach(logo => {
             logo.addEventListener('mouseenter', () => setCursor('logo'));
             logo.addEventListener('mouseleave', () => setCursor(''));
+        });
+
+        // Window control events
+        document.querySelectorAll('.code-dots span').forEach(control => {
+            control.addEventListener('mouseenter', () => setCursor('window-control', control));
+            control.addEventListener('mouseleave', () => setCursor(''));
         });
 
         // Nav events (excluding GitHub logo)
