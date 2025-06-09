@@ -271,6 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let mouseY = 0;
         let isSnapped = false;
         let currentElement = null;
+        let isFullscreen = false;
 
         // Track mouse with requestAnimationFrame for better performance
         document.addEventListener('mousemove', (e) => {
@@ -278,9 +279,34 @@ document.addEventListener('DOMContentLoaded', function() {
             mouseY = e.clientY;
         });
 
+        // Monitor fullscreen changes
+        document.addEventListener('fullscreenchange', () => {
+            isFullscreen = !!document.fullscreenElement;
+            
+            if (isFullscreen) {
+                // Hide custom cursor and restore normal cursor in fullscreen
+                cursor.style.display = 'none';
+                document.body.style.cursor = 'auto';
+                document.documentElement.style.cursor = 'auto';
+                style.textContent = `
+                    * { cursor: auto !important; }
+                    html, body { cursor: auto !important; }
+                `;
+            } else {
+                // Restore custom cursor when exiting fullscreen
+                cursor.style.display = 'block';
+                document.body.style.cursor = 'none';
+                document.documentElement.style.cursor = 'none';
+                style.textContent = `
+                    *, *::before, *::after { cursor: none !important; }
+                    html, body { cursor: none !important; }
+                `;
+            }
+        });
+
         // High-performance cursor following
         function updateCursor() {
-            if (!isSnapped) {
+            if (!isSnapped && !isFullscreen) {
                 cursor.style.left = mouseX + 'px';
                 cursor.style.top = mouseY + 'px';
             }
@@ -290,6 +316,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Cursor state management
         function setCursor(state, element = null) {
+            // Don't change cursor in fullscreen mode
+            if (isFullscreen) return;
+            
             if (state === 'button-magnetic' && element) {
                 const rect = element.getBoundingClientRect();
                 isSnapped = true;
