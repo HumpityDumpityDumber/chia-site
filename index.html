@@ -40,7 +40,7 @@
                         <span class="gradient-text">Made Simple</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Chia is a Nix-like declarative configuration and runtime manager built exclusively for 
+                        Chia is a simple, Nix-like declarative configuration and runtime manager built exclusively for 
                         Arch Linux, bringing reproducible system management to the bleeding edge.
                     </p>
                     <div class="hero-actions">
@@ -117,24 +117,10 @@ network "spazzyland" [
                 <h2 class="section-title">Understanding .chia Syntax</h2>
                 <div class="syntax-grid">
                     <div class="syntax-card">
-                        <h3>-- app-name --</h3>
-                        <p>Defines an isolated app environment. Each app must define exactly one package.</p>
+                        <h3>Block type</h3>
+                        <p>Specifies the kind of configuration you are defining, such as a package, service, profile, or network.</p>
                         <div class="syntax-example">
-                            <code>-- terminal --<br>alacritty<br>%auto<br>share^</code>
-                        </div>
-                    </div>
-                    <div class="syntax-card">
-                        <h3>package^ / binary^</h3>
-                        <p>Override package or binary names. The ^ directive goes on its own line, then the value on the next line.</p>
-                        <div class="syntax-example">
-                            <code>visual-studio-code-bin<br>package^<br>code<br>binary^</code>
-                        </div>
-                    </div>
-                    <div class="syntax-card">
-                        <h3>%auto / %none</h3>
-                        <p>%auto includes pacman dependencies for the single package above. %none skips dependencies entirely.</p>
-                        <div class="syntax-example">
-                            <code>discord-ptb<br>%auto</code>
+                            <code>package "discord"<br>services "waybar"</code>
                         </div>
                     </div>
                     <div class="syntax-card">
@@ -154,28 +140,25 @@ network "spazzyland" [
                 <div class="structure-container">
                     <div class="structure-example">
                         <div class="file-tree">
-                            <pre><code>/chia
-├── entry-point.chia
-├── /packages
-│   ├── user-packages.chia
-│   └── special-packages.chia
-├── /configs
-│   ├── settings.json
-│   ├── nginx.conf
-│   └── gitconfig.ini
-└── /system
-    ├── system-packages.chia
-    └── network-setup.chia</code></pre>
+                            <pre><code>/
+└── etc
+    └── chia
+        ├── chia.chia
+        └── {profile}
+            ├── configs
+            │   └── {app}.chia
+            ├── packages.chia
+            └── services.chia</code></pre>
                         </div>
                     </div>
                     <div class="structure-info">
                         <h3>Organized Configuration</h3>
                         <p>Chia uses a structured approach to configuration management:</p>
                         <ul>
-                            <li><strong>Entry Point:</strong> Main configuration file that ties everything together</li>
+                            <li><strong>chia.chia:</strong> Main configuration file that defines all profiles and network configuration</li>
                             <li><strong>Packages:</strong> Separate user and system package definitions</li>
-                            <li><strong>Configs:</strong> Application-specific configuration files</li>
-                            <li><strong>System:</strong> System-level settings and network configuration</li>
+                            <li><strong>Services:</strong> Declare all your systemd services</li>
+                            <li><strong>Configs:</strong> The configs folder holds your config rendering files for each app</li>
                         </ul>
                     </div>
                 </div>
@@ -186,89 +169,56 @@ network "spazzyland" [
             <div class="container">
                 <h2 class="section-title">Quick Examples</h2>
                 <div class="examples-tabs">
-                    <button class="tab-btn active" data-tab="basic">Basic Setup</button>
-                    <button class="tab-btn" data-tab="services">Services</button>
-                    <button class="tab-btn" data-tab="development">Development</button>
+                    <button class="tab-btn active" data-tab="basic">chia.chia</button>
+                    <button class="tab-btn" data-tab="services">Packages & Services</button>
+                    <button class="tab-btn" data-tab="development">Configs</button>
                 </div>
                 
                 <div class="tab-content active" id="basic">
                     <div class="code-example">
-                        <pre><code># Basic isolated package setup
-user-packages {
-  -- alacritty --
-  alacritty
-  %auto
-  share^
-  
-  -- discord --
-  discord-ptb
-  %auto
-  share^
-  needs^
+                        <pre><code>profile "work" [
+    level 4
+]
 
-  -- vencord --
-  discord
-  %auto
-  share^
-  needs^
-  
-  -- main browser --
-  firefox
-  %none 
-  share^
-  needs^
+profile "hobby" [
+    level 4
+]
+
+profile "gaming" [
+    pulls "hobby"
+    level 4
+]
+
+profile "kids" [
+    level 1
+    pulls "hobby"
+]
+
+network "spazzyland" [
+    password "pollypocket22"
 }</code></pre>
                     </div>
                 </div>
                 
                 <div class="tab-content" id="services">
                     <div class="code-example">
-                        <pre><code# Development environment with shared tools
-user-packages {
-  -- git --
-  git
-  %auto
-  share^
-  
-  -- nodejs --
-  nodejs-lts-hydrogen
-  %auto
-  share^
-  needs^
-  
-  -- vscode --
-  visual-studio-code-bin
-  package^
-  code
-  binary^
-  %auto
-  share^
-  needs^
-}</code></pre>
+                        <pre><code> package "discord" [
+    source "pacman"
+    name "modded discord"
+]
+
+package "vencord" [
+    source "aur"
+    name "vencord one"
+    also "discord"
+    config "vencord-one"
+]</code></pre>
                     </div>
                 </div>
                 
                 <div class="tab-content" id="development">
                     <div class="code-example">
-                        <pre><code# Complex dependency chain
-user-packages {
-  -- docker --
-  docker
-  %auto
-  share^
-  
-  -- kubectl --
-  kubectl
-  %auto
-  share^
-  needs^
-  
-  -- jetbrains --
-  jetbrains-toolbox
-  %auto
-  share^
-  needs^
-}</code></pre>
+                        <pre><code> Coming Soon! </code></pre>
                     </div>
                 </div>
             </div>
