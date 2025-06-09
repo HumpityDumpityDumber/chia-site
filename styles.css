@@ -591,11 +591,6 @@ body {
   font-size: 0.9rem;
 }
 
-.syntax-example code {
-  color: #e6e6e6;
-  line-height: 1.4;
-}
-
 /* Draggable Code Window */
 .draggable-window {
     position: relative;
@@ -636,115 +631,6 @@ body {
 /* Window control states */
 .draggable-window.minimized .code-content {
   display: none;
-}
-
-.restore-btn {
-  position: absolute;
-  bottom: clamp(1rem, 5vw, 2rem);
-  left: clamp(1rem, 5vw, 2rem);
-  background: var(--bg-dark);
-  border: none;
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.restore-btn svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #e6e6e6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .nav-logo {
-    height: 32px;
-  }
-  
-  .banner-svg {
-    max-height: 140px;
-  }
-  
-  .nav {
-    padding: 1rem;
-  }
-  
-  .nav-links {
-    gap: 1rem;
-  }
-  
-  .hero {
-    padding: 6rem 0 3rem;
-  }
-  
-  .hero-code {
-    padding-left: 1rem;
-  }
-  
-  .code-window {
-    width: 500px;
-    max-width: 95vw;
-  }
-  
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .step {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-  
-  .code-snippet {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .github-link svg {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .structure-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  .structure-info {
-    text-align: center;
-  }
-  
-  .syntax-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .syntax-card {
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-logo {
-    height: 28px;
-  }
-  
-  .banner-svg {
-    max-height: 120px;
-  }
-  
-  .code-window {
-    width: 400px;
-    max-width: 98vw;
-  }
 }
 
 /* Footer */
@@ -792,72 +678,212 @@ body {
   color: #999;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .nav {
-    padding: 1rem;
-  }
-  
-  .nav-links {
-    gap: 1rem;
-  }
-  
-  .hero {
-    padding: 6rem 0 3rem;
-  }
-  
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .step {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-  
-  .code-snippet {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .github-link svg {
+/* Hide default cursor everywhere */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+html {
+  cursor: none !important;
+}
+
+body {
+  cursor: none !important;
+}
+
+a, button, input, textarea, select {
+  cursor: none !important;
+}
+
+/* Custom Cursor System */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: rgba(65, 166, 58, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transition: width 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              height 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              background 0.25s ease;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: normal;
+  will-change: transform, width, height;
+}
+
+/* Hover state - grows smoothly */
+.custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(65, 166, 58, 0.3);
+  mix-blend-mode: normal;
+}
+
+/* Text cursor with inversion */
+.custom-cursor.text {
+  width: 2px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1px;
+  mix-blend-mode: difference;
+  transition: none;
+}
+
+/* Button magnetic cursor */
+.custom-cursor.button-magnetic {
+  width: var(--btn-width, 120px);
+  height: var(--btn-height, 45px);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 8px;
+  mix-blend-mode: normal;
+  box-shadow: 0 4px 15px rgba(65, 166, 58, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  animation: cursorGrowFluid 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes cursorGrowFluid {
+  0% {
     width: 20px;
     height: 20px;
+    border-radius: 50%;
+    font-size: 0px;
+    transform: translate(-50%, -50%) scale(1);
   }
-  
-  .structure-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  40% {
+    width: calc(var(--btn-width, 120px) * 1.02);
+    height: calc(var(--btn-height, 45px) * 1.02);
+    border-radius: 12px;
+    transform: translate(-50%, -50%) scale(1.01);
   }
-  
-  .structure-info {
-    text-align: center;
-  }
-  
-  .syntax-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .syntax-card {
-    padding: 1.5rem;
+  100% {
+    width: var(--btn-width, 120px);
+    height: var(--btn-height, 45px);
+    border-radius: 8px;
+    font-size: 14px;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-.run-btn {
-  background: transparent;
-  border: none;
-  padding: 0.5rem;
-  margin-left: auto;
-  cursor: pointer;
+.custom-cursor.button-magnetic::before {
+  content: var(--btn-text, 'CLICK');
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  animation: textFadeInFluid 0.35s ease 0.18s both;
+}
+
+@keyframes textFadeInFluid {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Nav magnetic cursor */
+.custom-cursor.nav-magnetic {
+  width: var(--nav-width, 100px);
+  height: 32px;
+  background: rgba(65, 166, 58, 0.9);
+  border: 2px solid var(--primary);
+  border-radius: 16px;
+  mix-blend-mode: normal;
   display: flex;
   align-items: center;
-  color: #ccc;
-  transition: color 0.2s ease;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 11px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  animation: navGrowFluid 0.2s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.run-btn:hover {
-  color: var(--primary);
+
+@keyframes navGrowFluid {
+  0% {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0px;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    width: var(--nav-width, 100px);
+    height: 32px;
+    border-radius: 16px;
+    font-size: 11px;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.custom-cursor.nav-magnetic::before {
+  content: var(--nav-text, 'GO');
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  animation: textFadeInFluid 0.2s ease 0.08s both;
+}
+
+/* Logo hover cursor */
+.custom-cursor.logo {
+  width: 50px;
+  height: 50px;
+  background: rgba(65, 166, 58, 0.3);
+  border: 2px solid rgba(65, 166, 58, 0.6);
+  mix-blend-mode: normal;
+  animation: logoGrow 0.25s ease;
+}
+
+@keyframes logoGrow {
+  0% {
+    width: 20px;
+    height: 20px;
+    border-width: 1px;
+  }
+  100% {
+    width: 50px;
+    height: 50px;
+    border-width: 2px;
+  }
+}
+
+/* Mobile - restore default cursor */
+@media (max-width: 768px) {
+  *, *::before, *::after {
+    cursor: auto !important;
+  }
+  
+  html, body {
+    cursor: auto !important;
+  }
+  
+  .custom-cursor {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    animation: none !important;
+    transition: none !important;
+  }
 }

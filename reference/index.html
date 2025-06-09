@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Niri's Box – Gruvbox-themed QuickShell dotfiles. Like Pandora's Box, but instead of releasing chaos, it unleashes digital beauty that cannot be contained.">
+  <title>Niri's Box - Digital Pandora</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loading-screen">
+    <div class="loading-animation">
+      <div class="loading-box"></div>
+      <p>Unleashing beauty...</p>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <span class="logo-icon">📦</span>
+        Niri's Box
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#get">Get</a></li>
+      </ul>
+      <div class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-background">
+      <div class="floating-elements">
+        <div class="floating-box" style="--delay: 0s">⚡</div>
+        <div class="floating-box" style="--delay: 2s">🔮</div>
+        <div class="floating-box" style="--delay: 4s">⚔️</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-content" data-aos="fade-up">
+        <h1>
+          <span class="gradient-text">Niri's Box</span>
+        </h1>
+        <p class="subtitle" data-aos="fade-up" data-aos-delay="200">Ancient Beauty, Modern Power</p>
+        <p class="hero-description" data-aos="fade-up" data-aos-delay="400">A carefully crafted Gruvbox-themed desktop environment powered by Niri's scrollable tiling and enhanced with custom QuickShell configurations. Built for those who appreciate both timeless design and modern functionality.</p>
+        <div class="hero-buttons" data-aos="fade-up" data-aos-delay="600">
+          <a href="#get" class="btn btn-primary">Get the Dotfiles</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="features" class="features">
+      <div class="container">
+        <h2 data-aos="fade-up">Features</h2>
+        <div class="features-grid">
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon">🏺</div>
+            <h3>Gruvbox Theme</h3>
+            <p>Warm, earthy colors that are comfortable for extended use while maintaining that retro aesthetic appeal.</p>
+            <div class="feature-highlight">Eye-friendly</div>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon">⚡</div>
+            <h3>QuickShell Integration</h3>
+            <p>Fast and responsive shell configuration that enhances your workflow with beautiful, functional interfaces.</p>
+            <div class="feature-highlight">Lightning fast</div>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-icon">🔮</div>
+            <h3>Detailed Customization</h3>
+            <p>Every element carefully tuned for the perfect balance of aesthetics and productivity.</p>
+            <div class="feature-highlight">Pixel-perfect</div>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="feature-icon">🌊</div>
+            <h3>Smooth Workflow</h3>
+            <p>Niri's scrollable tiling provides fluid window management that adapts to your natural workflow.</p>
+            <div class="feature-highlight">Seamless flow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2>About Niri's Box</h2>
+            <p>A desktop environment that blends classical design principles with modern functionality. This configuration represents careful attention to both visual appeal and practical usability.</p>
+            <p>Every component has been thoughtfully selected and configured to create a cohesive, beautiful desktop experience that doesn't sacrifice performance.</p>
+            <div class="tech-stack">
+              <span class="tech-item">🌊 Niri</span>
+              <span class="tech-item">⚡ QuickShell</span>
+              <span class="tech-item">🏺 Gruvbox</span>
+              <span class="tech-item">🔮 Wayland</span>
+            </div>
+          </div>
+          <div class="about-visual">
+            <div class="code-preview">
+              <div class="code-header">
+                <span class="code-title">config.qs</span>
+                <div class="code-dots">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="code-content">
+                <span class="code-comment">// QuickShell configuration</span><br>
+                <span class="code-keyword">theme</span>: <span class="code-string">"gruvbox"</span>,<br>
+                <span class="code-keyword">animation</span>: <span class="code-boolean">true</span>,<br>
+                <span class="code-keyword">transparency</span>: <span class="code-number">0.95</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="get" class="get">
+      <div class="container">
+        <div class="get-content">
+          <h2 data-aos="fade-up">Get Started</h2>
+          <p data-aos="fade-up" data-aos-delay="100">Ready to transform your desktop? Clone the repository and follow the installation guide.</p>
+          <div class="install-steps">
+            <div class="step" data-aos="fade-right" data-aos-delay="200">
+              <span class="step-number">🏺</span>
+              <div class="step-content">
+                <h4>Clone Repository</h4>
+                <div class="code-snippet">
+                  <code>git clone https://github.com/your-username/niris-box</code>
+                  <button class="copy-btn" data-copy="git clone https://github.com/your-username/niris-box">📋</button>
+                </div>
+              </div>
+            </div>
+            <div class="step" data-aos="fade-right" data-aos-delay="300">
+              <span class="step-number">⚡</span>
+              <div class="step-content">
+                <h4>Run Installation</h4>
+                <div class="code-snippet">
+                  <code>./install.sh</code>
+                  <button class="copy-btn" data-copy="./install.sh">📋</button>
+                </div>
+              </div>
+            </div>
+            <div class="step" data-aos="fade-right" data-aos-delay="400">
+              <span class="step-number">🔮</span>
+              <div class="step-content">
+                <h4>Enjoy Your Desktop</h4>
+                <p>Log out and select your Niri session</p>
+                <div class="step-bonus">🏛️ Bonus: Join our community for support!</div>
+              </div>
+            </div>
+          </div>
+          <div class="get-buttons" data-aos="fade-up" data-aos-delay="600">
+            <a href="https://github.com/your-username/niris-box" class="btn btn-primary btn-glow" target="_blank">
+              <span class="btn-icon">🏺</span>
+              View on GitHub
+              <span class="btn-badge">Free</span>
+            </a>
+            <a href="#" class="btn btn-secondary btn-glass">
+              <span class="btn-icon">📜</span>
+              Documentation
+            </a>
+            <a href="#" class="btn btn-tertiary">
+              <span class="btn-icon">🏛️</span>
+              Join Community
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Niri's Box 🏺</h3>
+          <p>Beautiful desktop environments for the modern age.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/your-username/niris-box">GitHub</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Niri's Box. Made with ❤️ and attention to detail.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
