@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'CustomEmoji';
+  src: url('assets/FluentEmojiColor.ttf') format('truetype');
+  font-display: swap;
+}
+
 :root {
   --primary: #41a63a;
   --primary-dark: #1e7207;
@@ -29,6 +35,25 @@ body {
   line-height: 1.6;
   color: var(--text-primary);
   background: var(--bg-primary);
+}
+
+/* Emoji styling */
+.feature-icon {
+  font-family: 'CustomEmoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Apply custom emoji font to any emoji characters */
+.feature-icon,
+*:has-emoji {
+  font-family: 'CustomEmoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+/* Target specific emoji characters if they appear elsewhere */
+[data-emoji],
+.emoji {
+  font-family: 'CustomEmoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
 }
 
 .container {
@@ -305,6 +330,7 @@ body {
 }
 
 .feature-icon {
+  font-family: 'CustomEmoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
   font-size: 3rem;
   margin-bottom: 1rem;
 }
@@ -589,6 +615,7 @@ body {
   border-radius: 8px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
+  color: var(--bg-primary);
 }
 
 /* Draggable Code Window */
@@ -799,7 +826,7 @@ a, button, input, textarea, select {
 .custom-cursor.nav-magnetic {
   width: var(--nav-width, 100px);
   height: 32px;
-  background: rgba(65, 166, 58, 0.9);
+  background: rgba(65, 166, 58, 0);
   border: 2px solid var(--primary);
   border-radius: 16px;
   mix-blend-mode: normal;
@@ -808,7 +835,7 @@ a, button, input, textarea, select {
   justify-content: center;
   font-weight: 600;
   font-size: 11px;
-  color: white;
+  color: rgba(255, 255, 255, 0);
   font-family: 'Inter', sans-serif;
   animation: navGrowFluid 0.2s cubic-bezier(0.23, 1, 0.32, 1);
 }

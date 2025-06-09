@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chia - Declarative Config & Runtime Manager</title>
-    <link rel="icon" type="image/svg+xml" href="logo-chia.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/logo-chia.svg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Overpass:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/v86/build/libv86.full.js"></script>
@@ -13,7 +13,7 @@
     <header class="header">
         <nav class="nav">
             <div class="nav-brand">
-                <img src="banner-chia.svg" alt="Chia" class="nav-logo">
+                <img src="assets/banner-chia.svg" alt="Chia" class="nav-logo">
             </div>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
@@ -32,7 +32,7 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-banner">
-                    <img src="promo-chia.svg" alt="Chia - use Nix or other options" class="banner-svg">
+                    <img src="assets/promo-chia.svg" alt="Chia - use Nix or other options" class="banner-svg">
                 </div>
                 <div class="hero-content">
                     <h1 class="hero-title">
@@ -56,27 +56,29 @@
                                 <span></span>
                                 <span></span>
                             </div>
-                            <span class="code-title">config.chia</span>
+                            <span class="code-title">chia.chia</span>
                         </div>
-                        <pre class="code-content"><code>user-packages {
-  -- alacritty --
-  %auto
-  needs^
+                        <pre class="code-content"><code>profile "work" [
+    level 4
+]
 
-  -- discord --
-  %auto
-  needs^
-  
-  -- git --
-  %auto
-  needs^
-  
-  -- vencord --
-  discord
-  share^
-  %auto
-  needs^
-}</code></pre>
+profile "hobby" [
+    level 4
+]
+
+profile "gaming" [
+    pulls "hobby"
+    level 4
+]
+
+profile "kids" [
+    level 1
+    pulls "hobby"
+]
+
+network "spazzyland" [
+    password "pollypocket22"
+]</code></pre>
                     </div>
                 </div>
             </div>
@@ -88,18 +90,18 @@
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🔒</div>
-                        <h3>App Isolation</h3>
-                        <p>Each app runs in its own isolated filesystem, with files symlinked only when the app launches.</p>
+                        <h3>Isolated installs</h3>
+                        <p>Each app installs in its own isolated folder, keeping all its assets contained.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🔗</div>
-                        <h3>Smart Symlinking</h3>
+                        <h3>Smart symlinking</h3>
                         <p>Automatic symlinking on app launch and cleanup on exit, keeping your system clean and organized.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🤝</div>
-                        <h3>Selective Sharing</h3>
-                        <p>Control which apps can access each other's files with the share^ directive for secure collaboration.</p>
+                        <div class="feature-icon">👥</div>
+                        <h3>Profiles</h3>
+                        <p>Profiles have their own packages and configs that don't interact with eachother, even on the system level.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🏗️</div>
@@ -136,10 +138,10 @@
                         </div>
                     </div>
                     <div class="syntax-card">
-                        <h3>share^ / needs^</h3>
-                        <p>share^ makes other defined apps available to this one. needs^ defines dependencies on other apps. Both appear alone.</p>
+                        <h3>Comments</h3>
+                        <p>Comments are writen between two --</p>
                         <div class="syntax-example">
-                            <code>share^<br>needs^</code>
+                            <code>-- this is a comment --</code>
                         </div>
                     </div>
                 </div>
