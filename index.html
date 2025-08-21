@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chia - Declarative Config & Runtime Manager</title>
+    <title>Chia - Declarative System Manager + Configuration Typesetting Language</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo-chia.svg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Overpass:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -104,9 +104,9 @@ network "spazzyland" [
                         <p>Profiles have their own packages and configs that don't interact with eachother, even on the system level.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🏗️</div>
-                        <h3>Arch Native</h3>
-                        <p>Built specifically for Arch Linux, leveraging pacman and the AUR for seamless package management.</p>
+                        <div class="feature-icon">🌎</div>
+                        <h3>Widely Accessible</h3>
+                        <p>Built specifically for All of Linux, leveraging pacman and the AUR for seamless package management.</p>
                     </div>
                 </div>
             </div>
@@ -141,14 +141,17 @@ network "spazzyland" [
                     <div class="structure-example">
                         <div class="file-tree">
                             <pre><code>/
-└── etc
-    └── chia
-        ├── chia.chia
+└──
+home/
+└── {user}/
+    └── chia/
+        ├── chia.kdl
         └── {profile}
             ├── configs
-            │   └── {app}.chia
-            ├── packages.chia
-            └── services.chia</code></pre>
+            │   ├── {app}.chia
+            │   └── build.kdl
+            ├── packages.kdl
+            └── services.kdl</code></pre>
                         </div>
                     </div>
                     <div class="structure-info">
