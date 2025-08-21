@@ -57,27 +57,27 @@
                             </div>
                             <span class="code-title">chia.kdl</span>
                         </div>
-                        <pre class="code-content"><code>profile "work" [
+                        <pre class="code-content"><code>profile "work" {
     level 4
-]
+}
 
-profile "hobby" [
+profile "hobby" {
     level 4
-]
+}
 
-profile "gaming" [
+profile "gaming" {
     pulls "hobby"
     level 4
-]
+}
 
-profile "kids" [
+profile "kids" {
     level 1
     pulls "hobby"
-]
+}
 
-network "spazzyland" [
+network "spazzyland" {
     password "pollypocket22"
-]</code></pre>
+}</code></pre>
                     </div>
                 </div>
             </div>
@@ -171,32 +171,32 @@ home/
             <div class="container">
                 <h2 class="section-title">Quick Examples</h2>
                 <div class="examples-tabs">
-                    <button class="tab-btn active" data-tab="basic">chia.chia</button>
+                    <button class="tab-btn active" data-tab="basic">chia.kdl</button>
                     <button class="tab-btn" data-tab="services">Packages & Services</button>
                     <button class="tab-btn" data-tab="development">Configs</button>
                 </div>
                 
                 <div class="tab-content active" id="basic">
                     <div class="code-example">
-                        <pre><code>profile "work" [
+                        <pre><code>profile "work" {
     level 4
-]
+}
 
-profile "hobby" [
+profile "hobby" {
     level 4
-]
+}
 
-profile "gaming" [
+profile "gaming" {
     pulls "hobby"
     level 4
-]
+}
 
-profile "kids" [
+profile "kids" {
     level 1
     pulls "hobby"
-]
+}
 
-network "spazzyland" [
+network "spazzyland" {
     password "pollypocket22"
 }</code></pre>
                     </div>
@@ -204,17 +204,17 @@ network "spazzyland" [
                 
                 <div class="tab-content" id="services">
                     <div class="code-example">
-                        <pre><code> package "discord" [
+                        <pre><code> package "discord" {
     source "pacman"
     name "modded discord"
-]
+}
 
-package "vencord" [
+package "vencord" {
     source "aur"
     name "vencord one"
     also "discord"
     config "vencord-one"
-]</code></pre>
+}</code></pre>
                     </div>
                 </div>
                 
